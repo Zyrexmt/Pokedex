@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-function PokemonSearch({ value, onChange, onSubmit }) {
+function PokemonSearch({ value, onChange, onSearch }) {
 
   useEffect(() => {
     // setTimeout - executa após um tempo determinado

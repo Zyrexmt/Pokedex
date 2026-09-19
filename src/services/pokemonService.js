@@ -63,3 +63,34 @@ export async function getPokemonDetails(pokemons) {
 
     return Promise.all(requests);
 }
+
+export async function searchByNameAndType(name, type) {
+  if(type) {
+    const data = getPokemonByType(type)
+    let pokemons = data.pokemon.map(item => item.pokemons)
+
+    if(name) {
+      // filtrando resultados pelo nome (parcial ou total)
+      pokemons = pokemons.filter(pokemon =>
+        // comparamos se o nome na lista inclui o nome procurado 
+        pokemon.name.toLowerCase()
+        .includes(name.toLowerCase())
+      )
+    }
+  
+    // reaproveitamos a função que busca os detalhes
+    return getPokemonDetails(pokemon)
+  }
+
+  const data = await request(`${API_URL}/pokemon?limit=2000`)
+  let pokemons = data.results
+
+  if(name) {
+    pokemons = pokemons.filter(pokemon =>
+      pokemon.name.toLowerCase()
+      .includes(name.toLowerCase())
+      )
+  }
+
+  return getPokemonDetails(pokemons)
+}

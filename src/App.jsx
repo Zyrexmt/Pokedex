@@ -12,7 +12,8 @@ import {
   getPokemonByType,
   getPokemonDetails,
   getPokemons,
-  getTypes
+  getTypes,
+  searchByNameAndType
 } from './services/pokemonService'
 
 const LIMIT = 20
@@ -73,7 +74,7 @@ function App() {
     }
   }, [page])
 
-  async function handleSearch(event) {
+  async function handleSearch(value) {
     // trim - remove espaços em branco
     // toLowerCase - todo o texto em minusculo
     const searchValue = value.trim().toLowerCase();
@@ -136,6 +137,7 @@ function App() {
       setPokemons([])
       setError('Não foi possível pesquisar os Pokémons')
     } finally {
+      setLoading(false)
 
     }
   }
@@ -167,7 +169,7 @@ function App() {
           <PokemonSearch
             value={search}
             onChange={setSearch}
-            onSubmit={handleSearch}
+            onSearch={handleSearch}
           />
 
           <TypeFilter
